@@ -1,0 +1,17 @@
+
+# make the folders
+mkdir -p scripts overpass_db
+
+# build the server
+docker compose up -d --build
+
+# verify running
+docker compose ps
+
+# testing the api
+curl -G http://localhost/api/interpreter \
+  --data-urlencode "data=[out:json];node(around:1000,44.48339036,11.36700797);out;"
+
+# shutting down the server
+docker compose down
+
