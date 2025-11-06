@@ -8,23 +8,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./overpass_db:/overpass_db
+      - ./overpass_db:/user/local/overpass_db
     environment:
       - OVERPASS_VERSION=0.7.62.8
       - DB_DIR=/usr/local/overpass_db
       - OVERPASS_DIR=/usr/local/overpass
       - PLANET_URL=https://download.geofabrik.de/europe/monaco-latest.osm.pbf
-
-#  updater:
-#    build:
-#      context: .
-#      dockerfile: updater.Dockerfile
-#    container_name: updater
-#    depends_on:
-#      - overpass
-#    volumes:
-#      - ./overpass_db:/usr/local/overpass_db
-#    environment:
-#      - DB_DIR=/usr/local/overpass_db
-#      - PLANET_URL=https://download.geofabrik.de/europe/monaco-latest.osm.pbf
-#    restart: unless-stopped
