@@ -27,7 +27,7 @@ a2enconf servername
 apachectl -t
 
 # Start dispatcher
-${OVERPASS_DIR}/bin/dispatcher --osm-base --db-dir=${DB_DIR} &
+${OVERPASS_DIR}/bin/dispatcher --osm-base --db-dir=${DB_DIR} --rate-limit=0 --allow-duplicate-queries=yes &
 sleep 3
 chmod 666 ${DB_DIR}/osm3s_osm_base
 
