@@ -1,10 +1,10 @@
 FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    OVERPASS_VERSION=0.7.62 \
-    DB_DIR=/overpass_db \
-    OVERPASS_DIR=/opt/overpass \
-    PLANET_URL=https://download.geofabrik.de/europe/monaco-latest.osm.pbf
+    OVERPASS_VERSION=0.7.62.8 \
+    DB_DIR=/usr/local/overpass_db \
+    OVERPASS_DIR=/usr/local/overpass \
+    PLANET_URL=https://download.geofabrik.de/europe/italy-latest.osm.pbf
 
 RUN apt-get update && apt-get install -y \
     build-essential wget curl ca-certificates git \

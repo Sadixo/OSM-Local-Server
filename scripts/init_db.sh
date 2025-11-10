@@ -4,10 +4,10 @@ set -e
 DB_DIR=${1:-/usr/local/overpass_db}
 PLANET_URL=${2:-https://download.geofabrik.de/europe/italy-latest.osm.pbf}
 OVERPASS_DIR=/usr/local/overpass
-#PLANET_PBF=italy-latest.osm.pbf
-#PLANET_GZ=italy-latest.osm.gz
-PLANET_PBF=monaco-latest.osm.pbf
-PLANET_GZ=monaco-latest.osm.gz
+PLANET_PBF=italy-latest.osm.pbf
+PLANET_GZ=italy-latest.osm.gz
+#PLANET_PBF=monaco-latest.osm.pbf
+#PLANET_GZ=monaco-latest.osm.gz
 
 mkdir -p ${DB_DIR}
 cd ${DB_DIR}

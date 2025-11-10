@@ -1,12 +1,12 @@
 set -euo pipefail
 
 DB_DIR=${1:-/usr/local/overpass_db}
-PLANET_URL=${2:-https://download.geofabrik.de/europe/monaco-latest.osm.pbf}
+PLANET_URL=${2:-https://download.geofabrik.de/europe/italy-latest.osm.pbf}
 OVERPASS_DIR=/usr/local/overpass
-#PLANET_PBF=italy-latest.osm.pbf
-#PLANET_GZ=italy-latest.osm.gz
-PLANET_PBF=monaco-latest.osm.pbf
-PLANET_GZ=monaco-latest.osm.gz
+PLANET_PBF=italy-latest.osm.pbf
+PLANET_GZ=italy-latest.osm.gz
+#PLANET_PBF=monaco-latest.osm.pbf
+#PLANET_GZ=monaco-latest.osm.gz
 
 echo "Terminating dispatcher"
 ${OVERPASS_DIR}/bin/dispatcher --terminate
@@ -26,7 +26,7 @@ rm -f ${PLANET_PBF} ${PLANET_GZ}
 
 echo "[update] done. Restart of the dispatcher"
 
-${OVERPASS_DIR}/bin/dispatcher --osm-base --db-dir=${DB_DIR} &
+${OVERPASS_DIR}/bin/dispatcher --osm-base --db-dir=${DB_DIR} --rate-limit=0 --allow-duplicate-queries=yes &
 sleep 3
 chmod 666 ${DB_DIR}/osm3s_osm_base
 
@@ -35,4 +35,4 @@ chmod 666 ${DB_DIR}/osm3s_osm_base
 #${OVERPASS_DIR}/bin/fetch_osc_and_apply.sh "https://planet.openstreetmap.org/replication/hour/" &
 
 # Start query server
-${OVERPASS_DIR}/bin/osm3s_query --db-dir=${DB_DIR} &
+#${OVERPASS_DIR}/bin/osm3s_query --db-dir=${DB_DIR} &

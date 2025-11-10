@@ -9,8 +9,3 @@ services:
       - "80:80"
     volumes:
       - ./overpass_db:/user/local/overpass_db
-    environment:
-      - OVERPASS_VERSION=0.7.62.8
-      - DB_DIR=/usr/local/overpass_db
-      - OVERPASS_DIR=/usr/local/overpass
-      - PLANET_URL=https://download.geofabrik.de/europe/monaco-latest.osm.pbf
