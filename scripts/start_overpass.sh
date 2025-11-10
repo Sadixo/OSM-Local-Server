@@ -17,15 +17,6 @@ fi
 rm -f ${DB_DIR}/osm3s_* || true
 mkdir -p ${DB_DIR}
 
-# Apache vhost enable
-a2enmod cgi ext_filter
-a2ensite overpass.conf
-a2dissite 000-default.conf || true
-# Set a global ServerName to silence FQDN warning
-echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf
-a2enconf servername
-apachectl -t
-
 # Start dispatcher
 ${OVERPASS_DIR}/bin/dispatcher --osm-base --db-dir=${DB_DIR} --rate-limit=0 --allow-duplicate-queries=yes &
 sleep 3
@@ -38,5 +29,10 @@ chmod 666 ${DB_DIR}/osm3s_osm_base
 # Start query server
 ${OVERPASS_DIR}/bin/osm3s_query --db-dir=${DB_DIR} &
 
-# Run Apache in foreground
-exec apachectl -D FOREGROUND
+# Avvia fcgiwrap sul socket usato da Nginx (con utente www-data)
+if [ ! -S /var/run/fcgiwrap.socket ]; then
+  /usr/sbin/fcgiwrap -s unix:/var/run/fcgiwrap.socket &
+fi
+
+# Avvia Nginx in foreground
+exec nginx -g 'daemon off;'
