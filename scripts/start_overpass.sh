@@ -30,9 +30,9 @@ chmod 666 ${DB_DIR}/osm3s_osm_base
 ${OVERPASS_DIR}/bin/osm3s_query --db-dir=${DB_DIR} &
 
 # Avvia fcgiwrap sul socket usato da Nginx (con utente www-data)
-if [ ! -S /var/run/fcgiwrap.socket ]; then
-  /usr/sbin/fcgiwrap -s unix:/var/run/fcgiwrap.socket &
-fi
+/usr/sbin/fcgiwrap -s unix:/var/run/fcgiwrap.socket &
+sleep 3
+chown www-data:www-data /var/run/fcgiwrap.socket || true
 
 # Avvia Nginx in foreground
 exec nginx -g 'daemon off;'
