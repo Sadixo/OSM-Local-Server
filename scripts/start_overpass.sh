@@ -19,6 +19,7 @@ mkdir -p ${DB_DIR}
 
 # Start dispatcher
 ${OVERPASS_DIR}/bin/dispatcher --osm-base --db-dir=${DB_DIR} --rate-limit=0 --allow-duplicate-queries=yes &
+DISPATCHER_PID=$!
 sleep 3
 chmod 666 ${DB_DIR}/osm3s_osm_base
 
@@ -30,9 +31,7 @@ chmod 666 ${DB_DIR}/osm3s_osm_base
 ${OVERPASS_DIR}/bin/osm3s_query --db-dir=${DB_DIR} &
 
 # Avvia fcgiwrap sul socket usato da Nginx (con utente www-data)
-/usr/sbin/fcgiwrap -s unix:/var/run/fcgiwrap.socket &
-sleep 3
-chown www-data:www-data /var/run/fcgiwrap.socket || true
+/usr/sbin/fcgiwrap -s tcp:0.0.0.0:9000 &
+FCGI_PID=$!
 
-# Avvia Nginx in foreground
-exec nginx -g 'daemon off;'
+wait $DISPATCHER_PID $FCGI_PID
