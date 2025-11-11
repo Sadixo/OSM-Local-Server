@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: overpass
-    ports:
+    expose:
       - "9000"
     volumes:
       - ./overpass_db:/user/local/overpass_db
