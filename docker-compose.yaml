@@ -24,12 +24,20 @@ services:
       - "443:443"
     networks:
       - overpass-net
+    secrets:
+      - overpass_api_keys
     healthcheck:
       test: [ "CMD", "nginx", "-t" ]
       interval: 30s
       timeout: 10s
       retries: 3
+    environment:
+      - API_KEYS_FILE=/run/secrets/overpass_api_keys
 
 networks:
   overpass-net:
     driver: bridge
+
+secrets:
+  overpass_api_keys:
+    file: ./secrets/api_keys.txt
