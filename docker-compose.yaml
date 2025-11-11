@@ -6,6 +6,30 @@ services:
       dockerfile: Dockerfile
     container_name: overpass
     ports:
-      - "80:80"
+      - "9000"
     volumes:
       - ./overpass_db:/user/local/overpass_db
+    networks:
+      - overpass-net
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    container_name: overpass-nginx
+    depends_on:
+      - overpass
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - overpass-net
+    healthcheck:
+      test: [ "CMD", "nginx", "-t" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  overpass-net:
+    driver: bridge
