@@ -34,4 +34,11 @@ ${OVERPASS_DIR}/bin/osm3s_query --db-dir=${DB_DIR} &
 /usr/sbin/fcgiwrap -s tcp:0.0.0.0:9000 &
 FCGI_PID=$!
 
-wait $DISPATCHER_PID $FCGI_PID
+# Avvio di cron per l'update
+echo "*/5 * * * * root /scripts/update_db.sh >> /var/log/overpass_update.log 2>&1; tail -c 102400 /var/log/overpass_update.log > /var/log/overpass_update.log.tmp && mv /var/log/overpass_update.log.tmp /var/log/overpass_update.log" > /etc/cron.d/overpass-update
+chmod 0644 /etc/cron.d/overpass-update
+service cron start
+
+CRON_PID=$!
+
+wait $DISPATCHER_PID $FCGI_PID $CRON_PID

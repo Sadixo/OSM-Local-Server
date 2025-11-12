@@ -9,9 +9,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y \
     build-essential wget curl ca-certificates git \
     libexpat1-dev zlib1g-dev liblz4-dev liblzma-dev libxml2-dev \
-    fcgiwrap \
+    fcgiwrap cron \
     osmctools gzip \
-#    osmosis\
     && rm -rf /var/lib/apt/lists/*
 
 COPY scripts/ /scripts/
