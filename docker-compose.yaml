@@ -7,8 +7,6 @@ services:
     container_name: overpass
     expose:
       - "9000"
-    volumes:
-      - ./overpass_db:/user/local/overpass_db
     networks:
       - overpass-net
 
