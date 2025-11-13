@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: overpass
+    volumes:
+      - ./overpass_db:/usr/local/overpass_db
     expose:
       - "9000"
     networks:
@@ -15,6 +17,8 @@ services:
       context: ./docker/nginx
       dockerfile: Dockerfile
     container_name: overpass-nginx
+    env_file:
+      - ./.env
     depends_on:
       - overpass
     ports:
