@@ -20,7 +20,7 @@ osmconvert ${DB_DIR}/${PLANET_PBF} | gzip -1 >${PLANET_GZ}
 gunzip <${DB_DIR}/${PLANET_GZ} | ${OVERPASS_DIR}/bin/update_database --db-dir=${DB_DIR}
 rm -f ${PLANET_PBF} ${PLANET_GZ}
 
-echo "[update] done. Restart of the dispatcher"
+echo "[update] done at $(date -u '+%Y-%m-%d %H:%M:%S UTC'). Restart of the dispatcher"
 
 ${OVERPASS_DIR}/bin/dispatcher --osm-base --db-dir=${DB_DIR} --rate-limit=0 --allow-duplicate-queries=yes &
 sleep 3
